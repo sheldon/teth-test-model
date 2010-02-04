@@ -3,7 +3,7 @@ class TestTethModel extends BaseTest{
   public $class = "TethModel";
   
   public function setter(){
-    $ret = false;
+    $ret = true;
     $test_model = new TethModel();
     $test_model->test_col = "test_value";
     if($test_model->data["test_col"] != "test_value") $this->results['setter']['basic_string_value'] = $ret = false;
