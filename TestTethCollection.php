@@ -15,10 +15,10 @@ class TestTethCollection extends BaseTest{
   public function valid(){ return false; }
 
   //ArrayAccess methods
-  public function offsetSet($offset, $value){ return false; }
-  public function offsetExists($offset){ return false; }
-  public function offsetUnset($offset){ return false; }
-  public function offsetGet($offset){ return false; }
+  public function offsetSet(){ return false; }
+  public function offsetExists(){ return false; }
+  public function offsetUnset(){ return false; }
+  public function offsetGet(){ return false; }
 
   //Countable method
   public function count(){ return false; }
