@@ -2,6 +2,11 @@
 class TestTethCollection extends BaseTest{
   public $class = "TethCollection";
   
+  public function get(){
+    $test_collection = TethCollection::get();
+    return $this->results['get']['returns_correct_class'] = ($test_collection instanceof $this->class);
+  }
+
   //Iterator methods
   public function rewind(){
     $test_collection = new $this->class;
