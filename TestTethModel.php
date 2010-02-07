@@ -11,21 +11,14 @@ class TestTethModel extends BaseTest{
   }
   
   public function setter(){
-    $ret = true;
     $test_model = new TethModel();
     $test_model->test_col = "test_value";
-    if($test_model->data["test_col"] != "test_value") $this->results['setter']['basic_string_value'] = $ret = false;
-    else $this->results['setter']['basic_string_value'] = true;
-
-    return $ret;
+    return $this->results['setter']['basic_string_value'] = ($test_model->data["test_col"] == "test_value");
   }
+  
   public function getter(){
-    $ret = true;
     $test_model = new TethModel();
     $test_model->test_col = "test_value";
-    if($test_model->test_col != "test_value") $this->results['getter']['basic_string_value'] = $ret = false;
-    else $this->results['getter']['basic_string_value'] = true;
-
-    return $ret;
+    return $this->results['getter']['basic_string_value'] = ($test_model->test_col == "test_value");
   }
 }?>
