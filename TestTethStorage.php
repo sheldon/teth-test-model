@@ -1,6 +1,6 @@
 <?php
-class TestTethCollection extends BaseTest{
-  public $class = "TethCollection";
+class TestTethStorage extends BaseTest{
+  public $class = "TethStorage";
   
   public function construct(){
     $test_collection = new $this->class;
@@ -10,11 +10,6 @@ class TestTethCollection extends BaseTest{
     return $this->results['construct']['empty'] && $this->results['construct']['with_data'];
   }
   
-  public function get(){
-    $test_collection = TethCollection::get();
-    return $this->results['get']['returns_correct_class'] = ($test_collection instanceof $this->class);
-  }
-
   //Iterator methods
   public function rewind(){
     $test_collection = new $this->class;
