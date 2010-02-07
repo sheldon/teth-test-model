@@ -2,6 +2,16 @@
 class TestTethCollection extends BaseTest{
   public $class = "TethCollection";
   
+  public function construct(){
+    $test_collection = new $this->class;
+    $this->results['construct']['empty'] = ($test_collection->model == "TethModel") && ($test_collection->collection == null) && ($test_collection->position == 0);
+    $test_collection = new $this->class(array("test1","test2"));
+    $this->results['construct']['with_data'] = ($test_collection->model == "TethModel") && ($test_collection->collection == array("test1","test2")) && ($test_collection->position == 0);
+    $test_collection = new $this->class(array("test1","test2"),"MyCustomModel");
+    $this->results['construct']['with_data_and_model'] = ($test_collection->model == "MyCustomModel") && ($test_collection->collection == array("test1","test2")) && ($test_collection->position == 0);
+    return $this->results['construct']['empty'] && $this->results['construct']['with_data'] && $this->results['construct']['with_data_and_model'];
+  }
+  
   public function get(){
     $test_collection = TethCollection::get();
     return $this->results['get']['returns_correct_class'] = ($test_collection instanceof $this->class);
