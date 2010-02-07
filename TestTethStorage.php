@@ -44,6 +44,27 @@ class TestTethStorage extends BaseTest{
     return $ret;
   }
 
+  public function save(){ return true;}
+
+  public function all(){
+    $ret = true;
+    $class = $this->class;
+    $model = new TethModel;
+    $model->name = "x";
+    $class::save($model);
+    
+    $model = new TethModel;
+    $model->name = "z";
+    $class::save($model);
+    
+    $result = $class::get()->filter("name", "z")->all();
+    
+    print_r($results);
+    
+    exit;
+    
+  }
+
   //Iterator methods
   public function rewind(){
     $test_storage = new $this->class;
