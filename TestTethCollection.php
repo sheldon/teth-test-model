@@ -23,8 +23,11 @@ class TestTethCollection extends BaseTest{
     return $this->results['rewind']['is_at_start'] = ($test_collection->position === 0);
   }
   public function current(){
-    $test_collection = new $this->class;
-    return $this->results['current']['empty_teth_class'] = ($test_collection->current() instanceof TethModel);
+    $test_collection = new $this->class(array("test1"));
+    $this->results['current']['valid_position'] = ($test_collection->current() instanceof TethModel);
+    $test_collection->position = 5;
+    $this->results['current']['invalid_position'] = !($test_collection->current() instanceof TethModel);
+    return $this->results['current']['valid_position'] && $this->results['current']['invalid_position'];
   }
   public function key(){
     $test_collection = new $this->class;
