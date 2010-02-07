@@ -59,7 +59,7 @@ class TestTethStorage extends BaseTest{
 
     $result = $class::get()->filter("name", "z")->all();
 
-    print_r($results);
+    print_r($result);
 
     exit;
 
