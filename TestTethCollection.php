@@ -4,12 +4,10 @@ class TestTethCollection extends BaseTest{
   
   public function construct(){
     $test_collection = new $this->class;
-    $this->results['construct']['empty'] = ($test_collection->model == "TethModel") && ($test_collection->collection == null) && ($test_collection->position == 0);
+    $this->results['construct']['empty'] = ($test_collection->collection == null) && ($test_collection->position == 0);
     $test_collection = new $this->class(array("test1","test2"));
-    $this->results['construct']['with_data'] = ($test_collection->model == "TethModel") && ($test_collection->collection == array("test1","test2")) && ($test_collection->position == 0);
-    $test_collection = new $this->class(array("test1","test2"),"MyCustomModel");
-    $this->results['construct']['with_data_and_model'] = ($test_collection->model == "MyCustomModel") && ($test_collection->collection == array("test1","test2")) && ($test_collection->position == 0);
-    return $this->results['construct']['empty'] && $this->results['construct']['with_data'] && $this->results['construct']['with_data_and_model'];
+    $this->results['construct']['with_data'] = ($test_collection->collection == array("test1","test2")) && ($test_collection->position == 0);
+    return $this->results['construct']['empty'] && $this->results['construct']['with_data'];
   }
   
   public function get(){
@@ -26,7 +24,7 @@ class TestTethCollection extends BaseTest{
   }
   public function current(){
     $test_collection = new $this->class;
-    return $this->results['current']['returns_correct_type'] = ($test_collection->current() instanceof TethModel);
+    return $this->results['current']['empty_teth_class'] = ($test_collection->current() instanceof TethModel);
   }
   public function key(){
     $test_collection = new $this->class;
@@ -66,7 +64,9 @@ class TestTethCollection extends BaseTest{
   }
   public function offsetGet(){
     $test_collection = new $this->class(array("test1","test2"));
-    return $this->results['offsetGet']['gets_correctly'] = ($test_collection->offsetGet(1)->data == "test2");
+    $this->results['offsetGet']['gets_existing'] = ($test_collection->offsetGet(1)->data == "test2");
+    $this->results['offsetGet']['gets_empty_non_existing'] = ($test_collection->offsetGet(5) == null);
+    return $this->results['offsetGet']['gets_existing'] && $this->results['offsetGet']['gets_empty_non_existing'];
   }
 
   //Countable method
