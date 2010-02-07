@@ -2,6 +2,14 @@
 class TestTethModel extends BaseTest{
   public $class = "TethModel";
   
+  public function construct(){
+    $test_model = new TethModel();
+    $this->results['construct']['empty'] = ($test_model->data == array());
+    $test_model = new TethModel(array("testcol1"=>"test1","testcol2"=>"test2"));
+    $this->results['construct']['with_data'] = ($test_model->data == array("testcol1"=>"test1","testcol2"=>"test2"));
+    return $this->results['construct']['empty'] && $this->results['construct']['with_data'];
+  }
+  
   public function setter(){
     $ret = true;
     $test_model = new TethModel();
