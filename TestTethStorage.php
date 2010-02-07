@@ -16,31 +16,31 @@ class TestTethStorage extends BaseTest{
     $result = $class::get()->filter("column", "value");
     if(count($result->filters) === 1) $this->results['filter']['single_filter'] = true;
     else $this->results['filter']['single_filter'] = $ret = false;
-    
-    $result = $result->filter("col", "value1")->filter("col", "value2")->filter("col", "value3")->filter("col", "value4", "!=");    
+
+    $result = $result->filter("col", "value1")->filter("col", "value2")->filter("col", "value3")->filter("col", "value4", "!=");
     if(count($result->filters) === 5) $this->results['filter']['additive_filter'] = true;
     else $this->results['filter']['additive_filter'] = $ret = false;
-    
+
     return $ret;
   }
-  
+
   public function remove_filter(){
     $ret = true;
     $class = $this->class;
     $result = $class::get()->filter("column", "value")->filter("col", "value1")->filter("col", "value2")->filter("col", "value3")->filter("col", "value4", "!=");
 
-    $result = $result->remove_filter("col", "value4", "!=");    
+    $result = $result->remove_filter("col", "value4", "!=");
     if(count($result->filters) === 4) $this->results['filter']['removed_by_col_and_value_and_op'] = true;
     else $this->results['filter']['removed_by_col_and_value_and_op'] = $ret = false;
-    
-    $result = $result->remove_filter("col", "value1");    
+
+    $result = $result->remove_filter("col", "value1");
     if(count($result->filters) === 3) $this->results['filter']['removed_by_col_and_value'] = true;
     else $this->results['filter']['removed_by_col_and_value'] = $ret = false;
-    
+
     $result = $result->remove_filter("col");
     if(count($result->filters) === 1) $this->results['filter']['removed_by_col'] = true;
     else $this->results['filter']['removed_by_col'] = $ret = false;
-    
+
     return $ret;
   }
 
@@ -52,17 +52,17 @@ class TestTethStorage extends BaseTest{
     $model = new TethModel;
     $model->name = "x";
     $class::save($model);
-    
+
     $model = new TethModel;
     $model->name = "z";
     $class::save($model);
-    
+
     $result = $class::get()->filter("name", "z")->all();
-    
+
     print_r($results);
-    
+
     exit;
-    
+
   }
 
   //Iterator methods
