@@ -42,10 +42,10 @@ class TestTethCollection extends BaseTest{
   public function valid(){
     $test_collection = new $this->class(array("test1","test2"));
     $test_collection->position = 1;
-    $should_be_valid = $test_collection->valid();
+    $this->results['valid']['valid_check'] = $test_collection->valid();
     $test_collection->position = 5;
-    $should_be_invalid = $test_collection->valid();
-    return ($this->results['valid']['valid_check'] = $should_be_valid) && ($this->results['valid']['invalid_check'] = !$should_be_invalid);
+    $this->results['valid']['invalid_check'] = !$test_collection->valid();
+    return $this->results['valid']['valid_check'] && $this->results['valid']['invalid_check'];
   }
 
   //ArrayAccess methods
