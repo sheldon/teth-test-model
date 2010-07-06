@@ -56,13 +56,28 @@ class TestTethStorage extends BaseTest{
     $model = new TethModel;
     $model->name = "z";
     $class::save($model);
+		
+		$model = new TethModel;
+    $model->name = "x";
+		$model->sect = 'section';
+    $class::save($model);
 
+		$result = $class::get()->all();
+    $this->results['all']['found_all'] = ($result->count() == 3);
+		
     $result = $class::get()->filter("name", "z")->all();
+    $this->results['all']['found_by_name'] = ($result->count() == 1);
 
-    print_r($result);
+		$result = $class::get()->filter("name", "x")->all();
+    $this->results['all']['found_by_name_with_duplicates'] = ($result->count() == 2);
 
-    exit;
+		$result = $class::get()->filter("name", "x")->filter('sect', "section")->all();
+		$this->results['all']['chained_filter'] = ($result->count() == 1);
 
+		$result = $class::get()->filter("name", "z")->filter('name', "x")->all();
+		$this->results['all']['chained_filter_fail'] = ($result->count() == 0);
+		
+		return $this->results['all']['found_all'] && $this->results['all']['found_by_name'] && $this->results['all']['found_by_name_with_duplicates'] && $this->results['all']['chained_filter'] && $this->results['all']['chained_filter_fail'];
   }
 
   //Iterator methods
