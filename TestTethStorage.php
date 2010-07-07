@@ -44,7 +44,22 @@ class TestTethStorage extends BaseTest{
     return $ret;
   }
 
-  public function save(){ return true;}
+  public function save(){
+		$class = $this->class;
+		$start = $class::get()->all()->count();
+    $model1 = new TethModel;
+		$model1->var = 1;
+		$class::save($model1);
+		$this->results['save']['saved_single'] = ($class::get()->all()->count() == ($start+1) );
+		$model2 = new TethModel;
+		$model2->var = 2;
+		$model3 = new TethModel;
+		$model3->var = 3;
+		$class::save($model2, $model3);
+		$this->results['save']['saved_multiple'] = ($class::get()->all()->count() == ($start+3) );
+		
+		return $this->results['save']['saved_multiple'] && $this->results['save']['saved_single'];
+	}
 
   public function all(){
     $ret = true;
