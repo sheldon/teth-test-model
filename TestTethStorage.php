@@ -62,8 +62,8 @@ class TestTethStorage extends BaseTest{
 	}
 
   public function all(){
-    $ret = true;
     $class = $this->class;
+		$start = $class::get()->all()->count();
     $model = new TethModel;
     $model->name = "x";
     $class::save($model);
@@ -76,9 +76,9 @@ class TestTethStorage extends BaseTest{
     $model->name = "x";
 		$model->sect = 'section';
     $class::save($model);
-
+		
 		$result = $class::get()->all();
-    $this->results['all']['found_all'] = ($result->count() == 3);
+    $this->results['all']['found_all'] = ($result->count() == ($start+3));
 		
     $result = $class::get()->filter("name", "z")->all();
     $this->results['all']['found_by_name'] = ($result->count() == 1);
