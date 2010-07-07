@@ -95,6 +95,23 @@ class TestTethStorage extends BaseTest{
 		return $this->results['all']['found_all'] && $this->results['all']['found_by_name'] && $this->results['all']['found_by_name_with_duplicates'] && $this->results['all']['chained_filter'] && $this->results['all']['chained_filter_fail'];
   }
 
+	public function delete(){
+		$class = $this->class;
+		$model1 = new TethModel;
+		$model1->var = 'x';
+		$model2 = new TethModel;
+		$model2->var = 'y';
+		
+		$class::save($model1);
+		$class::save($model2);
+		$count = $class::get()->all()->count();
+		$res = $class::get()->filter('var', 'x')->delete()->clear()->all()->count();
+		
+		$this->results['delete']['removed_one_via_filter'] = ($res == ($count-1) );
+		$this->results['delete']['removed_all'] = ($class::get()->delete()->clear()->all()->count() === 0);
+		
+		return $this->results['delete']['removed_one_via_filter'] && $this->results['delete']['removed_all'];
+	}
   //Iterator methods
   public function rewind(){
     $test_storage = new $this->class;
